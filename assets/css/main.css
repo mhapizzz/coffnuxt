@@ -1,0 +1,56 @@
+:root {
+  /* Base Backgrounds */
+  --background-color: #0d1b2a; /* Deep navy, seperti laut dalam */
+  --surface-color: #1b263b; /* Sedikit lebih terang, untuk card/input */
+
+  /* Brand Colors */
+  --primary-color: #3d5a80; /* Lautan biru tua, untuk tombol dan link */
+  --secondary-color: #98c1d9; /* Biru muda tenang, untuk hover & outline */
+
+  /* Accent Colors */
+  --accent-color: #e0fbfc; /* Putih kebiruan lembut, untuk kontras */
+
+  /* Status Colors */
+  --success-color: #06d6a0; /* Hijau terang (tetap sama) */
+  --danger-color: #ef476f; /* Merah terang (tetap sama) */
+
+  /* Text Colors */
+  --text-primary-color: #ffffff; /* Putih bersih */
+  --text-secondary-color: #bbd0e2; /* Biru-abu lembut */
+
+  /* Utility */
+  --border-color: #415a77; /* Garis pemisah elegan */
+  --disabled-color: #4c5c68;
+
+  /* Shadow */
+  --elevation-low: 0 1px 3px rgba(13, 27, 42, 0.3);
+  --elevation-mid: 0 4px 6px rgba(13, 27, 42, 0.4);
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-primary-color);
+}
+
+@import "tailwindcss";
+
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+  /* border: 1px solid var(--border-color); */
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.custom-table thead {
+  background-color: var(--surface-color);
+}
+
+.custom-table tr,
+th,
+td {
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  text-align: center;
+}
