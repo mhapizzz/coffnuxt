@@ -1,43 +1,68 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
-    class="topbar rounded-xl w-full relative z-10 px-4 py-4 flex items-center justify-between bg-[var(--surface-color)] shadow-md inset-shadow-xs"
+    :class="[
+      'topbar fixed top-0 left-0 right-0 w-full z-10 px-2 py-4 flex items-center justify-between',
+      { 'shadow-xs': isScrolled },
+    ]"
+    style="transition: all 0.3s ease-in-out"
   >
-    <button 
-      class="cursor-pointer p-2 hover:bg-[var(--primary-color)] rounded transition-colors" 
-      @click="handleToggle"
+    <div class="logo">
+      <img
+        ref="logoStr"
+        src="/images/str-black.svg"
+        alt="Logo"
+        class="h-8 logoStr"
+      />
+    </div>
+
+    <button
       type="button"
+      class="cursor-pointer p-2 hover:bg-[var(--primary-color)] rounded transition-colors"
+      @click="handleToggle"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
+        fill="none"
         viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
       >
         <path
-          fill="currentColor"
-          d="M15 15H3v2h12zm0-8H3v2h12zM3 13h18v-2H3zm0 8h18v-2H3zM3 3v2h18V3z"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
         />
       </svg>
     </button>
-
-    <div class="info">
-      <p>Halo, Hapiz</p>
-    </div>
+    <!-- <div class="info flex items-center gap-4">
+      <p class="text-sm text-gray-600">Scroll Y: {{ Math.round(scrollY) }}px</p>
+    </div> -->
   </div>
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { onMounted, onUnmounted, ref } from "vue";
 
-const toggleSidebar = inject('toggleSidebar')
+const logoStr = ref(null);
 
-const handleToggle = () => {
-  // console.log('Toggle button clicked!');
-  if (toggleSidebar) {
-    toggleSidebar();
-  } else {
-    console.error('toggleSidebar function not found!');
-  }
+const isScrolled = ref(false);
+const scrollY = ref(0);
+
+const handleScroll = () => {
+  scrollY.value = window.scrollY;
+  isScrolled.value = scrollY.value > 28;
+  // isScrolled.value = scrollY.value > 16;
 };
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  // Initialize scroll position
+  // scrollY.value = window.scrollY
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 </script>
