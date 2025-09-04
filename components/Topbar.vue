@@ -2,8 +2,8 @@
 <template>
   <div
     :class="[
-      'topbar fixed top-0 left-0 right-0 w-full z-10 px-2 py-4 flex items-center justify-between',
-      { 'shadow-xs': isScrolled },
+      'topbar fixed top-0 left-0 right-0 w-full z-10 px-2 py-4 flex items-center justify-between ',
+      { 'shadow-xs backdrop-blur-xs rounded-b-lg': isScrolled },
     ]"
     style="transition: all 0.3s ease-in-out"
   >

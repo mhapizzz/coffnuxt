@@ -1,6 +1,17 @@
 <template>
   <v-app>
     <div
+      v-if="showPreloader"
+      class="fixed inset-0 z-50 bg-white flex items-center justify-center"
+    >
+      <img
+        ref="preloaderLogo"
+        src="/images/str.svg"
+        alt="Preloader Logo"
+        class="h-32"
+      />
+    </div>
+    <div
       ref="bgDiv"
       class="h-[60vh] w-full flex items-end justify-start relative"
       style="background: #fe0000"
@@ -9,7 +20,7 @@
         ref="logoStrHead"
         src="/images/str-black.svg"
         alt="Logo"
-        class="h-80 opacity-10 absolute bottom-0 right-0 me-8 mb-8"
+        class="h-80 opacity-30 absolute bottom-0 right-0 me-8 mb-8"
       />
 
       <div class="mb-8">
@@ -17,8 +28,10 @@
           ref="title"
           class="text-black text-8xl font-bold"
           style="letter-spacing: -7px"
-        ></h2>
-        <p ref="subtitle" class="text-black ms-2"></p>
+        >
+          {{ titleText }}
+        </h2>
+        <p ref="subtitle" class="text-black ms-2">{{ subtitleText }}</p>
       </div>
     </div>
     <section class="min-h-screen w-full bg-blue-300 overflow-hidden relative">
@@ -96,7 +109,7 @@
           background-size: cover;
           background-position: center;
         "
-        @click="handleCardClick"
+        @click="handleCardClick('coffee')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -176,6 +189,10 @@ import { gsap } from "gsap";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 gsap.registerPlugin(ScrollTrigger);
 
 // References to DOM elements
@@ -184,79 +201,74 @@ const logoStrHead = ref(null);
 const title = ref(null);
 const subtitle = ref(null);
 
+const showPreloader = ref(true);
+const preloaderLogo = ref(null);
+
 // Text content for typewriter effect
 const titleText = "STATERA";
 const subtitleText = "Kedai kopi modern dengan berbagai pilihan minuman.";
 
-const handleCardClick = () => {
+const handleCardClick = (menu) => {
   // You can add your click handling logic here
   console.log("Card clicked!");
+  if (menu === "coffee") {
+    router.push("/menu/coffee");
+  }
 };
 
 onMounted(() => {
-  // Initialize text content as empty
-  title.value.textContent = "";
-  subtitle.value.textContent = "";
-
-  // Split text into characters and wrap each in a span
-  const titleChars = titleText.split("").map((char) => {
-    const span = document.createElement("span");
-    span.textContent = char;
-    span.style.opacity = "0";
-    title.value.appendChild(span);
-    return span;
+  // Preloader animation
+  const preTl = gsap.timeline({
+    onComplete: () => {
+      showPreloader.value = false; // remove preloader after animation
+    },
   });
 
-  const subtitleChars = subtitleText.split("").map((char) => {
-    const span = document.createElement("span");
-    span.textContent = char;
-    span.style.opacity = "0";
-    subtitle.value.appendChild(span);
-    return span;
-  });
+  // Blink effect (opacity up & down)
+  preTl
+    .to(preloaderLogo.value, {
+      opacity: 0,
+      duration: 0.5,
+      repeat: 1, // blink once
+      yoyo: true,
+      ease: "power1.inOut",
+    })
+    // Zoom in + fade out
+    .to(preloaderLogo.value, {
+      scale: 10,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.inOut",
+    });
 
-  // GSAP Timeline
+  // --- Your existing hero GSAP timeline ---
+  title.value.textContent = titleText;
+  subtitle.value.textContent = subtitleText;
+
+  gsap.set([title.value, subtitle.value], { opacity: 0, y: 50 });
+  gsap.set(logoStrHead.value, { opacity: 0, x: 400 });
+
   const tl = gsap.timeline();
-
-  // Animate background from top to bottom
   tl.from(bgDiv.value, {
-    delay: 1,
+    delay: 2, // start after preloader fades out
     y: "-100%",
     duration: 1,
     ease: "power2.out",
   })
-    // Fade in logo
-    .from(
+    .to(
       logoStrHead.value,
-      {
-        opacity: 0,
-        x: 50,
-        duration: 0.8,
-        ease: "power2.out",
-      },
+      { opacity: 1, x: 0, duration: 0.8, ease: "power2.out" },
       "-=0.5"
     )
-    // Typewriter effect for title
     .to(
-      titleChars,
-      {
-        opacity: 1,
-        duration: 0.05,
-        stagger: 0.1, // Delay between each character
-        ease: "none",
-      },
+      title.value,
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
       "-=0.3"
     )
-    // Typewriter effect for subtitle
     .to(
-      subtitleChars,
-      {
-        opacity: 1,
-        duration: 0.05,
-        stagger: 0.05, // Faster stagger for subtitle
-        ease: "none",
-      },
-      "-=0.2"
+      subtitle.value,
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
+      "-=0.6"
     );
 });
 </script>
