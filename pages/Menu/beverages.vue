@@ -10,12 +10,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -25,12 +25,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -43,12 +43,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -58,12 +58,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -77,12 +77,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -97,12 +97,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -114,12 +114,12 @@
                 <h4 class="menu-title mb-2">{{ item.name }}</h4>
               </div>
               <div
-                v-for="item in item.items"
-                :key="item.id"
-                class="menu-list pb-2 mt-2 font-semibold flex justify-between"
+                v-for="menuItem in item.items"
+                :key="menuItem.id"
+                class="menu-item menu-list pb-2 mt-2 font-semibold flex justify-between"
               >
-                <p class="menu-name text-sm">{{ item.name }}</p>
-                <p class="menu-price text-sm">{{ item.price }}</p>
+                <p class="menu-name text-sm">{{ menuItem.name }}</p>
+                <p class="menu-price text-sm">{{ menuItem.price }}</p>
               </div>
             </div>
           </template>
@@ -162,57 +162,155 @@ const onPreloaderComplete = () => {
 };
 
 const startMenuAnimations = () => {
-  // Set initial state for all menu sections
+  // Set initial state for all menu sections and items
   const menuSections = document.querySelectorAll('.menu-section');
+  const menuItems = document.querySelectorAll('.menu-item');
+  const menuTitles = document.querySelectorAll('.menu-title');
+  
   gsap.set(menuSections, { 
     opacity: 0, 
-    y: 30,
+    y: 20
+  });
+  
+  gsap.set(menuTitles, {
+    opacity: 0,
+    x: -30
+  });
+  
+  gsap.set(menuItems, {
+    opacity: 0,
+    x: 20,
     scale: 0.95
   });
 
-  // Create main timeline for page load animations
+  // Create main timeline for initial visible content
   const tl = gsap.timeline({
-    delay: 0.3 // Small delay to ensure DOM is ready
+    delay: 0.3
   });
 
-  // Animate coffee section first
-  if (coffeeSection.value) {
-    const coffeeSections = coffeeSection.value.querySelectorAll('.menu-section');
-    tl.to(coffeeSections, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      stagger: 0.15,
-      ease: "power2.out"
-    });
-  }
+  // Animate sections that are initially visible
+  const initialSections = document.querySelectorAll('.menu-section');
+  
+  initialSections.forEach((section, _index) => {
+    const sectionTitle = section.querySelector('.menu-title');
+    const sectionItems = section.querySelectorAll('.menu-item');
+    
+    // Check if section is in viewport initially
+    const rect = section.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible) {
+      // Animate sections that are initially visible
+      tl.to(section, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: "power2.out"
+      }, _index * 0.1)
+      .to(sectionTitle, {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      }, "-=0.2")
+      .to(sectionItems, {
+        opacity: 1,
+        x: 0,
+        scale: 1,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: "power2.out"
+      }, "-=0.3");
+    }
+  });
+  
+  // Set up scroll-triggered animations for sections not initially visible
+  setupScrollAnimations();
+};
 
-  // Animate mocktail section
-  if (mocktailSection.value) {
-    const mocktailSections = mocktailSection.value.querySelectorAll('.menu-section');
-    tl.to(mocktailSections, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: "power2.out"
-    }, "-=0.3");
-  }
-
-  // Animate non-coffee section last
-  if (nonCoffeeSection.value) {
-    const nonCoffeeSections = nonCoffeeSection.value.querySelectorAll('.menu-section');
-    tl.to(nonCoffeeSections, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.6,
-      stagger: 0.1,
-      ease: "power2.out"
-    }, "-=0.4");
-  }
+const setupScrollAnimations = () => {
+  // Create scroll-triggered animations for each menu section
+  const menuSections = document.querySelectorAll('.menu-section');
+  
+  menuSections.forEach((section, _index) => {
+    const sectionTitle = section.querySelector('.menu-title');
+    const sectionItems = section.querySelectorAll('.menu-item');
+    
+    // Check if section is initially visible
+    const rect = section.getBoundingClientRect();
+    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    // Only create ScrollTrigger for sections not initially visible
+    if (!isInitiallyVisible) {
+      // Create ScrollTrigger for the section container
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 85%",
+        end: "bottom 15%",
+        onEnter: () => {
+          // Animate section container
+          gsap.to(section, {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: "power2.out"
+          });
+          
+          // Animate title
+          gsap.to(sectionTitle, {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            delay: 0.1
+          });
+          
+          // Animate items with stagger
+          gsap.to(sectionItems, {
+            opacity: 1,
+            x: 0,
+            scale: 1,
+            duration: 0.4,
+            stagger: 0.08,
+            ease: "power2.out",
+            delay: 0.2
+          });
+        },
+        onLeave: () => {
+          // Optional: fade out when scrolling past (uncomment if desired)
+          // gsap.to(section, {
+          //   opacity: 0.3,
+          //   duration: 0.3
+          // });
+        },
+        onEnterBack: () => {
+          // Ensure section is visible when scrolling back up
+          gsap.to(section, {
+            opacity: 1,
+            duration: 0.3
+          });
+        }
+      });
+      
+      // Create individual ScrollTriggers for menu items for more granular control
+      sectionItems.forEach((item, itemIndex) => {
+        ScrollTrigger.create({
+          trigger: item,
+          start: "top 90%",
+          onEnter: () => {
+            gsap.to(item, {
+              opacity: 1,
+              x: 0,
+              scale: 1,
+              duration: 0.4,
+              ease: "power2.out",
+              delay: itemIndex * 0.05 // Slight stagger for individual items
+            });
+          }
+        });
+      });
+    }
+  });
 };
 
 const setupHoverEffects = () => {
