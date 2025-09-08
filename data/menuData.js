@@ -22,17 +22,6 @@ export const menuData = {
       ]
     },
     {
-      id: "mocktail-series",
-      name: "Mocktail Series",
-      description: "Kreasi kopi segar dengan rasa unik, bikin nongkrong makin seru.",
-      items: [
-        { id: 8, name: "Splash", price: "23.000", description: "Mocktail kopi segar rasa Splash yang fresh." },
-        { id: 9, name: "Enigma", price: "23.000", description: "Mocktail kopi dengan racikan rasa unik Enigma." },
-        { id: 10, name: "Fairy", price: "25.000", description: "Mocktail kopi manis lembut rasa Fairy." },
-        { id: 11, name: "Oriental", price: "25.000", description: "Mocktail kopi dengan sentuhan rasa Oriental." }
-      ]
-    },
-    {
       id: "kopi-susu",
       name: "Kopi Susu",
       description: "Kopi manis creamy ala anak tongkrongan. Enak diminum kapan aja.",
@@ -51,6 +40,19 @@ export const menuData = {
       description: "Menu khas yang jadi andalan, wajib dicoba!",
       items: [
         { id: 18, name: "Kopi Susu Kilat", price: "15.000", description: "Kopi susu dengan espresso ice cube, simple tapi nendang." }
+      ]
+    }
+  ],
+  mocktail: [
+    {
+      id: "mocktail-series",
+      name: "Mocktail Series",
+      description: "Kreasi kopi segar dengan rasa unik, bikin nongkrong makin seru.",
+      items: [
+        { id: 8, name: "Splash", price: "23.000", description: "Mocktail kopi segar rasa Splash yang fresh." },
+        { id: 9, name: "Enigma", price: "23.000", description: "Mocktail kopi dengan racikan rasa unik Enigma." },
+        { id: 10, name: "Fairy", price: "25.000", description: "Mocktail kopi manis lembut rasa Fairy." },
+        { id: 11, name: "Oriental", price: "25.000", description: "Mocktail kopi dengan sentuhan rasa Oriental." }
       ]
     }
   ],
@@ -77,7 +79,7 @@ export const menuData = {
         { id: 26, name: "Leci Tea", price: "23.000", description: "Teh harum dengan rasa leci segar." },
         { id: 27, name: "Manggo Tea", price: "23.000", description: "Teh tropis dengan rasa mangga segar." }
       ]
-    }
+    },
   ],
   food: [
     {

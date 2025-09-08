@@ -1,16 +1,6 @@
 <template>
   <v-app>
-    <div
-      v-if="showPreloader"
-      class="fixed inset-0 z-50 bg-white flex items-center justify-center"
-    >
-      <img
-        ref="preloaderLogo"
-        src="/images/str.svg"
-        alt="Preloader Logo"
-        class="h-32"
-      />
-    </div>
+    <Preloader @preloader-complete="onPreloaderComplete" />
     <div
       ref="bgDiv"
       class="h-[60vh] w-full flex items-end justify-start relative"
@@ -109,7 +99,7 @@
           background-size: cover;
           background-position: center;
         "
-        @click="handleCardClick('coffee')"
+        @click="handleCardClick('beverages')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +124,7 @@
           background-size: cover;
           background-position: center;
         "
-        @click="handleCardClick"
+        @click="handleCardClick('beverages')"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -201,9 +191,6 @@ const logoStrHead = ref(null);
 const title = ref(null);
 const subtitle = ref(null);
 
-const showPreloader = ref(true);
-const preloaderLogo = ref(null);
-
 // Text content for typewriter effect
 const titleText = "STATERA";
 const subtitleText = "Kedai kopi modern dengan berbagai pilihan minuman.";
@@ -211,46 +198,27 @@ const subtitleText = "Kedai kopi modern dengan berbagai pilihan minuman.";
 const handleCardClick = (menu) => {
   // You can add your click handling logic here
   console.log("Card clicked!");
-  if (menu === "coffee") {
-    router.push("/menu/coffee");
+  if (menu === "beverages") {
+    router.push("/menu/beverages");
   }
 };
 
-onMounted(() => {
-  // Preloader animation
-  const preTl = gsap.timeline({
-    onComplete: () => {
-      showPreloader.value = false; // remove preloader after animation
-    },
-  });
+const onPreloaderComplete = () => {
+  // Start the main animations after preloader completes
+  startMainAnimations();
+};
 
-  // Blink effect (opacity up & down)
-  preTl
-    .to(preloaderLogo.value, {
-      opacity: 0,
-      duration: 0.5,
-      repeat: 1, // blink once
-      yoyo: true,
-      ease: "power1.inOut",
-    })
-    // Zoom in + fade out
-    .to(preloaderLogo.value, {
-      scale: 10,
-      opacity: 0,
-      duration: 1,
-      ease: "power2.inOut",
-    });
-
-  // --- Your existing hero GSAP timeline ---
+const startMainAnimations = () => {
+  // Set up text content and initial states
   title.value.textContent = titleText;
   subtitle.value.textContent = subtitleText;
 
   gsap.set([title.value, subtitle.value], { opacity: 0, y: 50 });
   gsap.set(logoStrHead.value, { opacity: 0, x: 400 });
 
+  // Main timeline for hero animations
   const tl = gsap.timeline();
   tl.from(bgDiv.value, {
-    delay: 2, // start after preloader fades out
     y: "-100%",
     duration: 1,
     ease: "power2.out",
@@ -270,6 +238,10 @@ onMounted(() => {
       { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
       "-=0.6"
     );
+};
+
+onMounted(() => {
+  // Main animations will be triggered by preloader completion event
 });
 </script>
 
